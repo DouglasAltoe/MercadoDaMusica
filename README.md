@@ -1,0 +1,2 @@
+Este projeto foi desenvolvido durante a disciplina de Desenvolvimento Web do curso de graduação em Sistemas de Informação do IFES campus Cachoeiro de Itapemirim, ministrada pelo professor Ricardo Maróquio.
+O intuito deste trabalho foi simular um marketplace de músicas, com base nos conteúdos estudados no decorrer da disciplina. O trabalho foi desenvolvido pelos estudantes Douglas Altoé Stein da Silva e Rafael Savignon de Resende.
