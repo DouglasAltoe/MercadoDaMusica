@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    container_name: MercadoDaMusica.cachoeiro.es
+    container_name: mercadodamusica.cachoeiro.es
     build: .
     ports:
       - "8072:8000"
