@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "descricao": "Clássica"
+    },
+    {
+        "id": 2,
+        "descricao": "Hip-Hop"
+    },
+    {
+        "id": 3,
+        "descricao": "Jazz"
+    },
+    {
+        "id": 4,
+        "descricao": "Pop"
+    },
+    {
+        "id": 5,
+        "descricao": "Rock"
+    }
+]

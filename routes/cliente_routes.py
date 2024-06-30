@@ -90,6 +90,13 @@ async def get_sair(request: Request):
     adicionar_mensagem_sucesso(response, "Saída realizada com sucesso!")
     return response
 
+@router.get("/cartaoform")
+async def get_cartaoform(request: Request):
+    return templates.TemplateResponse(
+        "pages/cartaoform.html",
+        {"request": request},
+    )
+
 
 @router.get("/carrinho")
 async def get_carrinho(request: Request, id_musica: int = Query(0)):
@@ -107,7 +114,7 @@ async def get_carrinho(request: Request, id_musica: int = Query(0)):
 @router.post("/post_adicionar_carrinho", response_class=RedirectResponse)
 async def post_adicionar_carrinho(request: Request, id_musica: int = Form(...)):
     musica = MusicaRepo.obter_um(id_musica)
-    mensagem = f"O musica <b>{musica.nome}</b> foi adicionado ao carrinho."    
+    mensagem = f"A música <b>{musica.nome}</b> foi adicionada ao carrinho."    
     pedidos = PedidoRepo.obter_por_estado(request.state.cliente.id, 1)
     pedido_carrinho = pedidos[0] if pedidos else None        
     if pedido_carrinho == None:
@@ -119,7 +126,7 @@ async def post_adicionar_carrinho(request: Request, id_musica: int = Form(...)):
         ItemPedidoRepo.inserir(item_pedido)            
     else:
         ItemPedidoRepo.aumentar_quantidade_musica(pedido_carrinho.id, id_musica)
-        mensagem = f"O musica <b>{musica.nome}</b> já estava no carrinho e teve sua quantidade aumentada."        
+        mensagem = f"A música <b>{musica.nome}</b> já estava no carrinho e teve sua quantidade aumentada."        
     response = RedirectResponse("/cliente/carrinho", status.HTTP_303_SEE_OTHER)
     adicionar_mensagem_sucesso(response, mensagem)
     return response
@@ -132,18 +139,18 @@ async def post_aumentar_item(request: Request, id_musica: int = Form(0)):
     
     if pedido_carrinho == None:
         response = RedirectResponse(f"/musica?id={id_musica}", status.HTTP_303_SEE_OTHER)
-        adicionar_mensagem_alerta(f"Seu carrinho não foi encontrado. Adicione este musica ao carrinho novamente.")
+        adicionar_mensagem_alerta(f"Seu carrinho não foi encontrado. Adicione esta música ao carrinho novamente.")
         return response
 
     qtde = ItemPedidoRepo.obter_quantidade_por_musica(pedido_carrinho.id, id_musica)
     if qtde == 0:
         response = RedirectResponse(f"/musica?id={id_musica}", status.HTTP_303_SEE_OTHER)
-        adicionar_mensagem_alerta(f"Este musica não foi encontrado em seu carrinho. Adicione-o novamente.")
+        adicionar_mensagem_alerta(f"Esta música não foi encontrada em seu carrinho. Adicione-a novamente.")
         return response
     
     ItemPedidoRepo.aumentar_quantidade_musica(pedido_carrinho.id, id_musica)
     response = RedirectResponse("/cliente/carrinho", status.HTTP_303_SEE_OTHER)
-    adicionar_mensagem_sucesso(response, f"O musica <b>{musica.nome}</b> teve sua quantidade aumentada para <b>{qtde+1}</b>.")
+    adicionar_mensagem_sucesso(response, f"A música <b>{musica.nome}</b> teve sua quantidade aumentada para <b>{qtde+1}</b>.")
     return response
 
 @router.post("/post_reduzir_item", response_class=RedirectResponse)
@@ -159,14 +166,21 @@ async def post_reduzir_item(request: Request, id_musica: int = Form(0)):
 
     qtde = ItemPedidoRepo.obter_quantidade_por_musica(pedido_carrinho.id, id_musica)
     if qtde == 0:        
-        adicionar_mensagem_alerta(f"O musica {id_musica} não foi encontrado em seu carrinho.")
+        adicionar_mensagem_alerta(f"A música {id_musica} não foi encontrada em seu carrinho.")
         return response
     
     if qtde == 1:
         ItemPedidoRepo.excluir(pedido_carrinho.id, id_musica)        
-        adicionar_mensagem_sucesso(response, f"O musica <b>{musica.nome}</b> foi excluído do carrinho.")
+        adicionar_mensagem_sucesso(response, f"A música <b>{musica.nome}</b> foi excluída do carrinho.")
         return response
     
     ItemPedidoRepo.diminuir_quantidade_musica(pedido_carrinho.id, id_musica)    
-    adicionar_mensagem_sucesso(response, f"O musica <b>{musica.nome}</b> teve sua quantidade diminuída para <b>{qtde+1}</b>.")
+    adicionar_mensagem_sucesso(response, f"A música <b>{musica.nome}</b> teve sua quantidade diminuída para <b>{qtde+1}</b>.")
+    return response
+
+
+@router.post("/post_pagamento", response_class=RedirectResponse)
+async def post_reduzir_item(request: Request):
+    response = RedirectResponse("/", status.HTTP_303_SEE_OTHER)
+    adicionar_mensagem_sucesso(response, f"O pagamento foi realizado com sucesso!")
     return response

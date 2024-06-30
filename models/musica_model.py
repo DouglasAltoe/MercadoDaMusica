@@ -6,6 +6,7 @@ from typing import Optional
 class Musica():
     id: Optional[int] = None
     nome: Optional[str] = None
+    artista: Optional[str] = None
     preco: Optional[float] = None
     descricao: Optional[str] = None
-    estoque: Optional[int] = None
+    genero: Optional[int] = None

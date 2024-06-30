@@ -2,25 +2,27 @@ SQL_CRIAR_TABELA = """
     CREATE TABLE IF NOT EXISTS musica (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
+        artista TEXT NOT NULL,
         preco FLOAT NOT NULL,
         descricao TEXT NOT NULL,
-        estoque INTEGER NOT NULL)
+        genero INTEGER NOT NULL,
+        FOREIGN KEY (genero) REFERENCES genero(id))
 """
 
 SQL_INSERIR = """
-    INSERT INTO musica(nome, preco, descricao, estoque)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO musica(nome, artista, preco, descricao, genero)
+    VALUES (?, ?, ?, ?, ?)
 """
 
 SQL_OBTER_TODOS = """
-    SELECT id, nome, preco, descricao, estoque
+    SELECT id, nome, artista, preco, descricao, genero
     FROM musica
     ORDER BY nome
 """
 
 SQL_ALTERAR = """
     UPDATE musica
-    SET nome=?, preco=?, descricao=?, estoque=?
+    SET nome=?, preco=?, artista=?, descricao=?, genero=?
     WHERE id=?
 """
 
@@ -30,7 +32,7 @@ SQL_EXCLUIR = """
 """
 
 SQL_OBTER_UM = """
-    SELECT id, nome, preco, descricao, estoque
+    SELECT id, nome, artista, preco, descricao, genero
     FROM musica
     WHERE id=?
 """
@@ -40,7 +42,7 @@ SQL_OBTER_QUANTIDADE = """
 """
 
 SQL_OBTER_BUSCA = """
-    SELECT id, nome, preco, descricao, estoque
+    SELECT id, nome, artista, preco, descricao, genero
     FROM musica
     WHERE nome LIKE ? OR descricao LIKE ?
     ORDER BY #1

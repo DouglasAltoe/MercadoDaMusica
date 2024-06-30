@@ -22,7 +22,7 @@ class MusicaRepo:
                 cursor = conexao.cursor()
                 cursor.execute(
                     SQL_INSERIR,
-                    (musica.nome, musica.preco, musica.descricao, musica.estoque),
+                    (musica.nome, musica.artista, musica.preco, musica.descricao, musica.genero),
                 )
                 if cursor.rowcount > 0:
                     musica.id = cursor.lastrowid
@@ -52,9 +52,10 @@ class MusicaRepo:
                     SQL_ALTERAR,
                     (
                         musica.nome,
+                        musica.artista,
                         musica.preco,
                         musica.descricao,
-                        musica.estoque,
+                        musica.genero,
                         musica.id,
                     ),
                 )
@@ -107,9 +108,9 @@ class MusicaRepo:
             case 1:
                 SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "nome")
             case 2:
-                SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "preco ASC")
+                SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "genero ASC")
             case 3:
-                SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "preco DESC")
+                SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "artista")
             case _:
                 SQL_OBTER_BUSCA_ORDENADA = SQL_OBTER_BUSCA.replace("#1", "nome")
         try:

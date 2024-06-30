@@ -1,7 +1,7 @@
 import math
 from sqlite3 import DatabaseError
 from fastapi import APIRouter, HTTPException, Query, Request, status
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from dtos.entrar_dto import EntrarDTO
 from util.html import ler_html
@@ -45,6 +45,13 @@ async def get_root(request: Request):
 async def get_contato(request: Request):
     return templates.TemplateResponse(
         "pages/contato.html",
+        {"request": request},
+    )
+
+@router.get("/sobre")
+async def get_sobre(request: Request):
+    return templates.TemplateResponse(
+        "pages/sobre.html",
         {"request": request},
     )
 
@@ -113,7 +120,7 @@ async def post_entrar(entrar_dto: EntrarDTO):
     response = JSONResponse(content={"redirect": {"url": entrar_dto.return_url}})
     adicionar_mensagem_sucesso(
         response,
-        f"Olá, <b>{cliente_entrou.nome}</b>. Seja bem-vindo(a) à Loja Virtual!",
+        f"Olá, <b>{cliente_entrou.nome}</b>. Seja bem-vindo(a) ao Mercado da Música!",
     )
     adicionar_cookie_auth(response, token)
     return response
