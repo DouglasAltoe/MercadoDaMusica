@@ -43,6 +43,9 @@
                     </a>
                 </li> -->
                 {%- endif -%}
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/sobre' }}" href="/sobre">Sobre</a>
+                </li>
             </ul>
             <form class="d-flex" role="search" action="/buscar" method="get">
                 <input class="form-control me-2" type="search" placeholder="O que deseja buscar?" name="q">

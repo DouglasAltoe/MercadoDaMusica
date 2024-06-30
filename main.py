@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI
 from fastapi.staticfiles import StaticFiles
 from repositories.cliente_repo import ClienteRepo
+from repositories.genero_repo import GeneroRepo
 from repositories.item_pedido_repo import ItemPedidoRepo
 from repositories.pedido_repo import PedidoRepo
 from repositories.musica_repo import MusicaRepo
@@ -10,6 +11,8 @@ from util.exceptions import configurar_excecoes
 
 MusicaRepo.criar_tabela()
 MusicaRepo.inserir_musicas_json("sql/musicas.json")
+GeneroRepo.criar_tabela()
+GeneroRepo.inserir_generos_json("sql/generos.json")
 ClienteRepo.criar_tabela()
 ClienteRepo.inserir_clientes_json("sql/clientes.json")
 PedidoRepo.criar_tabela()
